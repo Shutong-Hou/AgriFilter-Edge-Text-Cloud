@@ -1,0 +1,56 @@
+# model_config.yaml —— 模型与训练规范（方案第三部分）
+# 显存核算：Qwen2.5-7B FP16 ~15.2GB；3B FP16 ~7GB；14B-GPTQ-Int4 ~9.5GB；
+# Qwen2-VL-7B FP16 ~17GB；2x7B AWQ-Int4 ~13GB。（红线11：不可行配置禁止出现）
+
+models_dir: ${AGRI_MODELS_DIR:-E:/AgriFilter/models}
+results_dir: ${AGRI_RESULTS_DIR:-E:/AgriFilter/results}
+snapshots_dir: ${AGRI_SNAPSHOTS_DIR:-E:/AgriFilter/snapshots}
+
+saf:
+  backbone: mobilenet_v3_small
+  head: edl                     # Sensoy EDL 头
+  evidence: softplus
+  alpha_formula: "e+1"          # α = e + 1
+  uncertainty: "K/S"            # u = K/S, K=2（二分类：健康/病害）
+  K: 2
+  loss: sensoy_type2_mle
+  kl_anneal: {step: 10, scale: 1.0}   # λ_t = min(1, t/10)
+  optimizer:
+    head_lr: 0.001
+    backbone_lr: 0.0001
+    weight_decay: 0.0005
+  batch_size: 64
+  epochs: 10
+
+csc:
+  backbone: mobilenet_v3_small
+  head: linear_38
+  label_smoothing: 0.1
+  epochs: 5
+  batch_size: 64
+  optimizer:
+    head_lr: 0.001
+    backbone_lr: 0.0001
+    weight_decay: 0.0005
+
+cloud_llm_t1:
+  main: {repo: Qwen/Qwen2.5-7B-Instruct, dtype: fp16, vram_gb: 15.2}
+  small: {repo: Qwen/Qwen2.5-3B-Instruct, dtype: fp16, vram_gb: 7}
+  large: {repo: Qwen/Qwen2.5-14B-Instruct-GPTQ-Int4, dtype: gptq_int4, vram_gb: 9.5}
+  mllm_baseline: {repo: Qwen/Qwen2-VL-7B-Instruct, dtype: fp16, vram_gb: 17}
+
+cloud_llm_t2:                   # Tier 2（时间余量时执行）
+  challenge: {repo: Qwen/Qwen2.5-32B-Instruct-AWQ, dtype: awq_int4, vram_gb: 18.5}
+  llama8b: {repo: metral-ai/Llama-3.1-8B-Instruct, dtype: fp16}
+
+quantization_e17:               # E17 量化权衡
+  awq: {repo: Qwen/Qwen2.5-7B-Instruct-AWQ, dtype: awq_int4}
+
+vllm:
+  backend: xgrammar              # guided decoding 后端（S2 锁定版本）
+  max_model_len: 8192
+  gpu_memory_utilization: 0.90
+  temperature_main: 0.0          # temp=0 主实验
+  top_p: 1.0
+
+prompt_templates: E:/AgriFilter/configs/prompts.yaml

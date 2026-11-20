@@ -1,0 +1,75 @@
+# prompts.yaml —— 冻结的 Prompt 模板（方案 E5 五臂 / E7 Prompt 消融）
+# 各臂输入 token 数在 E5 中实测上报（必报）。L2e 解释规则见 S3 预注册。
+
+system_instruct: |
+  你是一名农业植保专家。根据给定的作物信息，输出结构化的病害诊断。
+  字段说明：
+  - diagnosis: 病害诊断（字符串，非空）
+  - action: 防治建议（字符串，非空，禁止使用占位符）
+  - reasoning: 推理过程（字符串，非空，不少于10个字符）
+  - confidence: 自评置信度，取值 0.0 到 1.0 之间的数字
+  必须以合法 JSON 输出且仅包含以上四个字段。
+
+# 标签（仅含类名）
+L0: |
+  {system}
+  作物病害类别候选：{classes}
+  请给出诊断。输出 JSON。
+
+# KG 硬描述（L2）：各类别拼接 KG 描述（方案 E5：纯 KG，不含 top3 概率）
+L2: |
+  {system}
+  作物病害类别候选（含疾病知识描述）：
+  {class_descriptions}
+  请给出诊断。输出 JSON。
+
+# 无关上下文控制臂（L2e）：等 token 无关农学文本
+L2e: |
+  {system}
+  作物病害类别候选：{classes}
+  附注：农学背景资料（与本次诊断无关）：{filler}
+  请给出诊断。输出 JSON。{fill_instruction}
+
+# 软描述（L3）：Top-3 + u，u 来自 SAF-EDL
+L3: |
+  {system}
+  作物病害类别候选：{classes}
+  输入软证据（Top-3 类别及概率，以及健康/病害不确定性 u）：
+  {top3_with_uncertainty}
+  请给出诊断。输出 JSON。{u_context}
+
+# 完全体（L4）：Top-3 + u + KG
+L4: |
+  {system}
+  作物病害类别候选（含疾病知识描述）：
+  {class_descriptions}
+  输入软证据（Top-3 类别及概率，以及不确定性 u）：
+  {top3_with_uncertainty}
+  请给出诊断。输出 JSON。{u_context}
+
+# E7 prompt 变体
+zero_shot: |
+  {system}
+  作物病害类别候选：{classes}
+  请给出诊断。输出 JSON。
+
+chain_of_thought: |
+  {system}
+  作物病害类别候选：{classes}
+  请先逐步推理病害可能性，再给出确诊与建议。输出 JSON。
+
+few_shot_3: |
+  {system}
+  作物病害类别候选：{classes}
+  参考以下示例（病害-症状-建议）：
+  {examples}
+  请给出诊断。输出 JSON。
+
+# guided 解码时附加的 schema 指令（仅用于自由文本对照臂的提示，guided 用结构化约束）
+guided_attach: |
+  请严格按照 JSON Schema 输出：
+  {{"diagnosis": string, "action": string, "reasoning": string, "confidence": number in [0,1]}}
+
+# u 上下文说明（L3/L4 中 u 的语义引导，机制证据 N9）
+u_context: |
+  其中 u 为“健康/病害”二分类不确定性（0=确定，1=完全不确定）。请结合 u 校准你的置信度与判断。

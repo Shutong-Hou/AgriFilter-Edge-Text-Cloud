@@ -1,0 +1,508 @@
+{
+  "config": {
+    "n": 1000,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "csc_ckpt": "csc_seed43.pt",
+    "data_root": "G:\\阿里云盘\\AgriFilter\\data",
+    "arms": [
+      "L0",
+      "L2",
+      "L2e",
+      "L3",
+      "L4"
+    ]
+  },
+  "per_seed": {
+    "42": {
+      "n": 1000,
+      "n_missing_local": 0,
+      "csc_top1": 0.989,
+      "csc_top1_ci": [
+        0.9804104032716242,
+        0.9938468899108859
+      ],
+      "csc_top3": 0.998,
+      "csc_top3_ci": [
+        0.9927370411104123,
+        0.9994513678975429
+      ],
+      "arms": {
+        "L0": {
+          "n": 1000,
+          "both_correct": 19,
+          "csc_only": 970,
+          "llm_only": 3,
+          "both_wrong": 8,
+          "csc_acc": 0.989,
+          "llm_acc": 0.022,
+          "correction_rate": 0.2727272727272727,
+          "damage_rate": 0.980788675429727,
+          "net_gain": -0.967,
+          "mcnemar_p": 3.846216986062161e-285
+        },
+        "L2": {
+          "n": 1000,
+          "both_correct": 25,
+          "csc_only": 964,
+          "llm_only": 0,
+          "both_wrong": 11,
+          "csc_acc": 0.989,
+          "llm_acc": 0.025,
+          "correction_rate": 0.0,
+          "damage_rate": 0.974721941354904,
+          "net_gain": -0.964,
+          "mcnemar_p": 1.2826677504057426e-290
+        },
+        "L2e": {
+          "n": 1000,
+          "both_correct": 14,
+          "csc_only": 975,
+          "llm_only": 0,
+          "both_wrong": 11,
+          "csc_acc": 0.989,
+          "llm_acc": 0.014,
+          "correction_rate": 0.0,
+          "damage_rate": 0.9858442871587462,
+          "net_gain": -0.975,
+          "mcnemar_p": 6.26302612502804e-294
+        },
+        "L3": {
+          "n": 1000,
+          "both_correct": 941,
+          "csc_only": 48,
+          "llm_only": 0,
+          "both_wrong": 11,
+          "csc_acc": 0.989,
+          "llm_acc": 0.941,
+          "correction_rate": 0.0,
+          "damage_rate": 0.04853387259858443,
+          "net_gain": -0.048,
+          "mcnemar_p": 7.105427357601002e-15
+        },
+        "L4": {
+          "n": 1000,
+          "both_correct": 868,
+          "csc_only": 121,
+          "llm_only": 0,
+          "both_wrong": 11,
+          "csc_acc": 0.989,
+          "llm_acc": 0.868,
+          "correction_rate": 0.0,
+          "damage_rate": 0.12234580384226491,
+          "net_gain": -0.121,
+          "mcnemar_p": 7.52316384526264e-37
+        }
+      },
+      "hybrid_L3_sweep": [
+        {
+          "tau_conf": 0.3,
+          "fallback_rate": 0.0010000000000000009,
+          "hybrid_acc": 0.989
+        },
+        {
+          "tau_conf": 0.4,
+          "fallback_rate": 0.0030000000000000027,
+          "hybrid_acc": 0.989
+        },
+        {
+          "tau_conf": 0.5,
+          "fallback_rate": 0.017000000000000015,
+          "hybrid_acc": 0.989
+        },
+        {
+          "tau_conf": 0.6,
+          "fallback_rate": 0.030000000000000027,
+          "hybrid_acc": 0.989
+        },
+        {
+          "tau_conf": 0.7,
+          "fallback_rate": 0.05400000000000005,
+          "hybrid_acc": 0.988
+        },
+        {
+          "tau_conf": 0.8,
+          "fallback_rate": 0.10199999999999998,
+          "hybrid_acc": 0.984
+        },
+        {
+          "tau_conf": 0.9,
+          "fallback_rate": 0.376,
+          "hybrid_acc": 0.974
+        },
+        {
+          "tau_conf": 0.95,
+          "fallback_rate": 0.829,
+          "hybrid_acc": 0.949
+        },
+        {
+          "tau_conf": 0.99,
+          "fallback_rate": 0.998,
+          "hybrid_acc": 0.941
+        }
+      ],
+      "csc_top1_errors": {
+        "Tomato___Early_blight -> Tomato___Target_Spot": 2,
+        "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot -> Corn_(maize)___Northern_Leaf_Blight": 2,
+        "Tomato___Spider_mites Two-spotted_spider_mite -> Tomato___Target_Spot": 2,
+        "Tomato___Early_blight -> Tomato___Spider_mites Two-spotted_spider_mite": 1,
+        "Tomato___Target_Spot -> Tomato___Bacterial_spot": 1,
+        "Tomato___Late_blight -> Strawberry___Leaf_scorch": 1,
+        "Corn_(maize)___Northern_Leaf_Blight -> Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": 1,
+        "Potato___Late_blight -> Tomato___Late_blight": 1
+      }
+    },
+    "43": {
+      "n": 1000,
+      "n_missing_local": 0,
+      "csc_top1": 0.987,
+      "csc_top1_ci": [
+        0.9778853478989854,
+        0.9923872528778702
+      ],
+      "csc_top3": 0.998,
+      "csc_top3_ci": [
+        0.9927370411104123,
+        0.9994513678975429
+      ],
+      "arms": {
+        "L0": {
+          "n": 1000,
+          "both_correct": 20,
+          "csc_only": 967,
+          "llm_only": 3,
+          "both_wrong": 10,
+          "csc_acc": 0.987,
+          "llm_acc": 0.023,
+          "correction_rate": 0.23076923076923078,
+          "damage_rate": 0.9797365754812564,
+          "net_gain": -0.964,
+          "mcnemar_p": 3.0486001364600424e-284
+        },
+        "L2": {
+          "n": 1000,
+          "both_correct": 22,
+          "csc_only": 965,
+          "llm_only": 1,
+          "both_wrong": 12,
+          "csc_acc": 0.987,
+          "llm_acc": 0.023,
+          "correction_rate": 0.07692307692307693,
+          "damage_rate": 0.977710233029382,
+          "net_gain": -0.964,
+          "mcnemar_p": 3.1008492866058827e-288
+        },
+        "L2e": {
+          "n": 1000,
+          "both_correct": 15,
+          "csc_only": 972,
+          "llm_only": 0,
+          "both_wrong": 13,
+          "csc_acc": 0.987,
+          "llm_acc": 0.015,
+          "correction_rate": 0.0,
+          "damage_rate": 0.9848024316109423,
+          "net_gain": -0.972,
+          "mcnemar_p": 5.010420900022432e-293
+        },
+        "L3": {
+          "n": 1000,
+          "both_correct": 936,
+          "csc_only": 51,
+          "llm_only": 0,
+          "both_wrong": 13,
+          "csc_acc": 0.987,
+          "llm_acc": 0.936,
+          "correction_rate": 0.0,
+          "damage_rate": 0.05167173252279635,
+          "net_gain": -0.051,
+          "mcnemar_p": 8.881784197001252e-16
+        },
+        "L4": {
+          "n": 1000,
+          "both_correct": 839,
+          "csc_only": 148,
+          "llm_only": 2,
+          "both_wrong": 11,
+          "csc_acc": 0.987,
+          "llm_acc": 0.841,
+          "correction_rate": 0.15384615384615385,
+          "damage_rate": 0.14994934143870314,
+          "net_gain": -0.146,
+          "mcnemar_p": 1.5871106406942878e-41
+        }
+      },
+      "hybrid_L3_sweep": [
+        {
+          "tau_conf": 0.3,
+          "fallback_rate": 0.006000000000000005,
+          "hybrid_acc": 0.987
+        },
+        {
+          "tau_conf": 0.4,
+          "fallback_rate": 0.01200000000000001,
+          "hybrid_acc": 0.985
+        },
+        {
+          "tau_conf": 0.5,
+          "fallback_rate": 0.02100000000000002,
+          "hybrid_acc": 0.984
+        },
+        {
+          "tau_conf": 0.6,
+          "fallback_rate": 0.03400000000000003,
+          "hybrid_acc": 0.984
+        },
+        {
+          "tau_conf": 0.7,
+          "fallback_rate": 0.05300000000000005,
+          "hybrid_acc": 0.984
+        },
+        {
+          "tau_conf": 0.8,
+          "fallback_rate": 0.09599999999999997,
+          "hybrid_acc": 0.982
+        },
+        {
+          "tau_conf": 0.9,
+          "fallback_rate": 0.386,
+          "hybrid_acc": 0.967
+        },
+        {
+          "tau_conf": 0.95,
+          "fallback_rate": 0.84,
+          "hybrid_acc": 0.941
+        },
+        {
+          "tau_conf": 0.99,
+          "fallback_rate": 0.998,
+          "hybrid_acc": 0.936
+        }
+      ],
+      "csc_top1_errors": {
+        "Tomato___Early_blight -> Tomato___Spider_mites Two-spotted_spider_mite": 2,
+        "Grape___Black_rot -> Grape___Esca_(Black_Measles)": 1,
+        "Strawberry___Leaf_scorch -> Peach___Bacterial_spot": 1,
+        "Tomato___Leaf_Mold -> Tomato___Septoria_leaf_spot": 1,
+        "Tomato___Septoria_leaf_spot -> Peach___Bacterial_spot": 1,
+        "Tomato___Early_blight -> Tomato___Late_blight": 1,
+        "Tomato___Late_blight -> Strawberry___Leaf_scorch": 1,
+        "Potato___Late_blight -> Potato___Early_blight": 1,
+        "Tomato___Leaf_Mold -> Tomato___Spider_mites Two-spotted_spider_mite": 1,
+        "Tomato___Tomato_mosaic_virus -> Tomato___Spider_mites Two-spotted_spider_mite": 1,
+        "Tomato___Late_blight -> Peach___Bacterial_spot": 1,
+        "Corn_(maize)___Common_rust_ -> Corn_(maize)___healthy": 1
+      }
+    },
+    "44": {
+      "n": 1000,
+      "n_missing_local": 0,
+      "csc_top1": 0.987,
+      "csc_top1_ci": [
+        0.9778853478989854,
+        0.9923872528778702
+      ],
+      "csc_top3": 0.999,
+      "csc_top3_ci": [
+        0.9943572970398397,
+        0.9998234581709428
+      ],
+      "arms": {
+        "L0": {
+          "n": 1000,
+          "both_correct": 24,
+          "csc_only": 963,
+          "llm_only": 3,
+          "both_wrong": 10,
+          "csc_acc": 0.987,
+          "llm_acc": 0.027,
+          "correction_rate": 0.23076923076923078,
+          "damage_rate": 0.9756838905775076,
+          "net_gain": -0.96,
+          "mcnemar_p": 4.817665502628096e-283
+        },
+        "L2": {
+          "n": 1000,
+          "both_correct": 29,
+          "csc_only": 958,
+          "llm_only": 0,
+          "both_wrong": 13,
+          "csc_acc": 0.987,
+          "llm_acc": 0.029,
+          "correction_rate": 0.0,
+          "damage_rate": 0.9706180344478217,
+          "net_gain": -0.958,
+          "mcnemar_p": 8.209073602596753e-289
+        },
+        "L2e": {
+          "n": 1000,
+          "both_correct": 19,
+          "csc_only": 968,
+          "llm_only": 0,
+          "both_wrong": 13,
+          "csc_acc": 0.987,
+          "llm_acc": 0.019,
+          "correction_rate": 0.0,
+          "damage_rate": 0.9807497467071935,
+          "net_gain": -0.968,
+          "mcnemar_p": 8.016673440035891e-292
+        },
+        "L3": {
+          "n": 1000,
+          "both_correct": 937,
+          "csc_only": 50,
+          "llm_only": 0,
+          "both_wrong": 13,
+          "csc_acc": 0.987,
+          "llm_acc": 0.937,
+          "correction_rate": 0.0,
+          "damage_rate": 0.05065856129685917,
+          "net_gain": -0.05,
+          "mcnemar_p": 1.7763568394002505e-15
+        },
+        "L4": {
+          "n": 1000,
+          "both_correct": 861,
+          "csc_only": 126,
+          "llm_only": 0,
+          "both_wrong": 13,
+          "csc_acc": 0.987,
+          "llm_acc": 0.861,
+          "correction_rate": 0.0,
+          "damage_rate": 0.1276595744680851,
+          "net_gain": -0.126,
+          "mcnemar_p": 2.350988701644575e-38
+        }
+      },
+      "hybrid_L3_sweep": [
+        {
+          "tau_conf": 0.3,
+          "fallback_rate": 0.0050000000000000044,
+          "hybrid_acc": 0.987
+        },
+        {
+          "tau_conf": 0.4,
+          "fallback_rate": 0.008000000000000007,
+          "hybrid_acc": 0.987
+        },
+        {
+          "tau_conf": 0.5,
+          "fallback_rate": 0.019000000000000017,
+          "hybrid_acc": 0.987
+        },
+        {
+          "tau_conf": 0.6,
+          "fallback_rate": 0.03600000000000003,
+          "hybrid_acc": 0.986
+        },
+        {
+          "tau_conf": 0.7,
+          "fallback_rate": 0.05700000000000005,
+          "hybrid_acc": 0.985
+        },
+        {
+          "tau_conf": 0.8,
+          "fallback_rate": 0.10399999999999998,
+          "hybrid_acc": 0.979
+        },
+        {
+          "tau_conf": 0.9,
+          "fallback_rate": 0.36,
+          "hybrid_acc": 0.969
+        },
+        {
+          "tau_conf": 0.95,
+          "fallback_rate": 0.834,
+          "hybrid_acc": 0.944
+        },
+        {
+          "tau_conf": 0.99,
+          "fallback_rate": 0.996,
+          "hybrid_acc": 0.937
+        }
+      ],
+      "csc_top1_errors": {
+        "Corn_(maize)___Northern_Leaf_Blight -> Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": 3,
+        "Tomato___Target_Spot -> Tomato___Bacterial_spot": 2,
+        "Tomato___Spider_mites Two-spotted_spider_mite -> Tomato___Target_Spot": 2,
+        "Tomato___Early_blight -> Tomato___Late_blight": 1,
+        "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot -> Corn_(maize)___Northern_Leaf_Blight": 1,
+        "Tomato___Early_blight -> Tomato___Target_Spot": 1,
+        "Tomato___Early_blight -> Tomato___Bacterial_spot": 1,
+        "Orange___Haunglongbing_(Citrus_greening) -> Tomato___Late_blight": 1,
+        "Tomato___Late_blight -> Apple___healthy": 1
+      }
+    }
+  },
+  "pooled": {
+    "L0": {
+      "n": 3000,
+      "both_correct": 63,
+      "csc_only": 2900,
+      "llm_only": 9,
+      "both_wrong": 28,
+      "csc_acc": 0.9876666666666667,
+      "llm_acc": 0.024,
+      "correction_rate": 0.24324324324324326,
+      "damage_rate": 0.9787377657779278,
+      "net_gain": -0.9636666666666667,
+      "mcnemar_p": 0.0
+    },
+    "L2": {
+      "n": 3000,
+      "both_correct": 76,
+      "csc_only": 2887,
+      "llm_only": 1,
+      "both_wrong": 36,
+      "csc_acc": 0.9876666666666667,
+      "llm_acc": 0.025666666666666667,
+      "correction_rate": 0.02702702702702703,
+      "damage_rate": 0.9743503206209922,
+      "net_gain": -0.962,
+      "mcnemar_p": 0.0
+    },
+    "L2e": {
+      "n": 3000,
+      "both_correct": 48,
+      "csc_only": 2915,
+      "llm_only": 0,
+      "both_wrong": 37,
+      "csc_acc": 0.9876666666666667,
+      "llm_acc": 0.016,
+      "correction_rate": 0.0,
+      "damage_rate": 0.9838002024974688,
+      "net_gain": -0.9716666666666667,
+      "mcnemar_p": 0.0
+    },
+    "L3": {
+      "n": 3000,
+      "both_correct": 2814,
+      "csc_only": 149,
+      "llm_only": 0,
+      "both_wrong": 37,
+      "csc_acc": 0.9876666666666667,
+      "llm_acc": 0.938,
+      "correction_rate": 0.0,
+      "damage_rate": 0.05028687141410732,
+      "net_gain": -0.049666666666666665,
+      "mcnemar_p": 2.802596928649634e-45
+    },
+    "L4": {
+      "n": 3000,
+      "both_correct": 2568,
+      "csc_only": 395,
+      "llm_only": 2,
+      "both_wrong": 35,
+      "csc_acc": 0.9876666666666667,
+      "llm_acc": 0.8566666666666667,
+      "correction_rate": 0.05405405405405406,
+      "damage_rate": 0.13331083361457982,
+      "net_gain": -0.131,
+      "mcnemar_p": 4.895204026252089e-115
+    }
+  },
+  "full_eval": null
+}

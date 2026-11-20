@@ -1,0 +1,13 @@
+# seeds.yaml
+# 全环节种子登记（红线4：全环节种子登记）
+# 本文件为唯一种子来源，所有脚本通过 utils.seeds 读取，禁止硬编码。
+# 方案第三部分：3 种子（42/43/44）；LLM 3 推理种子。
+
+# 【偏离·经用户批准】原 [42,43,44]；seed42 的 EDL u 分布塌缩（证据量普遍极低、u 近常数），
+# 使其过滤/不确定性指标退化且会使 E5 的 u 软压缩失效。同种子重训确定性复现，故改用 45 替换 42。
+experiment_seeds: [43, 44, 45]        # SAF/CSC 训练种子、E3+ 头消融种子
+llm_inference_seeds: [1001, 1002, 1003]  # 推理种子（temp>0 敏感性用）
+group_split_seed: 42                  # E0b 拍摄组级 80/20 划分 seed
+dev_split_seed: 7                     # E0d 训练集划 10% dev（组感知同步）
+fewshot_seed: 2024                    # E7 few-shot 选取种子
+sampling_seed: 42                     # E5/E8 抽样种子（n=1000 抽样种子=42）

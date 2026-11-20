@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "agrifilter_llm_output_schema_v1.0",
+  "title": "AGriFilter LLM Diagnosis Output Schema",
+  "description": "冻结的云端 LLM 输出 JSON Schema（S3 预注册，红线15/方案第三部分 JSON Schema 冻结）。四 required 字段：diagnosis/action/reasoning/confidence。类型约束 + confidence∈[0,1] + 字符串 minLength≥1（防空字段）。",
+  "type": "object",
+  "required": ["diagnosis", "action", "reasoning", "confidence"],
+  "additionalProperties": false,
+  "properties": {
+    "diagnosis": {
+      "type": "string",
+      "minLength": 1,
+      "description": "病虫害诊断结论（应落入输入类集合或明确标注未知）"
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1,
+      "description": "防治建议（action）。占位符如“无/N/A”计字段退化（B.8 L2）"
+    },
+    "reasoning": {
+      "type": "string",
+      "minLength": 1,
+      "description": "推理过程说明，长度阈值见 configs/eval_config.yaml reasoning_min_len"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "模型对诊断的自评置信度 [0,1]"
+    }
+  }
+}

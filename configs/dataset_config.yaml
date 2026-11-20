@@ -1,0 +1,27 @@
+# dataset_config.yaml —— 数据集路径与分层配置（方案第二部分 2.1）
+# 路径可被环境变量 AGRI_DATA_ROOT 覆盖；默认 E:\AgriFilter\data
+
+data_root: ${AGRI_DATA_ROOT:-E:/AgriFilter/data}
+
+datasets:
+  plantvillage:            # D1 训练来源 + 组感知验证集
+    dir: ${data_root}/plantvillage
+    expected_instances: 54305
+    expected_classes: 38
+    has_healthy: true
+    license: "CC BY 4.0 (PlantVillage, 2016)"
+  plantdoc:                # D2 跨域真实田间
+    dir: ${data_root}/plantdoc
+    expected_instances: 2572   # 实际重排后 28类/2572图（含 2 图极小区）
+    expected_classes: 28
+  cassava:                 # D3 跨域 + 天然长尾
+    dir: ${data_root}/cassava
+    expected_classes: 5
+    has_healthy: true      # cassava_mosaic/healthy 等
+
+partition:
+  train_fraction: 0.8      # E0b 拍摄组级 80/20
+  dev_fraction: 0.1        # E0d 训练集内 10% dev（组感知同步）
+  phash_hamming_thresholds: [2, 3, 4, 5, 6, 7, 8, 9, 10]   # E0a pHash 近重复阈值档（加密曲线；划分仍用 t=5）
+
+label_mapping: E:/AgriFilter/configs/label_mapping.csv

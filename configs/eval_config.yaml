@@ -1,0 +1,50 @@
+# eval_config.yaml —— 评估/统计/结构完整性通用配置（S3 预注册冻结）
+# 对应方案第四部分统计方法学 + 附录 B.8 三级完整性阶梯。
+
+statistics:
+  bootstrap_iterations: 10000        # 配对 Bootstrap Δ95%CI
+  wilson_alpha: 0.05                 # Wilson CI 显著性水准
+  cp_alpha: 0.05                     # Clopper-Pearson 单侧 95% 界（含 0 事件）
+  holm_alpha: 0.05                   # 检验族内 Holm 校正
+  ece_bins: 10                       # 置信度校准 ECE 桶数
+  wilcoxon_alternative: two-sided
+
+integrity_ladder:                     # 附录 B.8
+  required_fields: [diagnosis, action, reasoning, confidence]
+  placeholders: ["无", "N/A", "n/a", "NA", "none", "-", "无建议", "unknown disease"]
+  reasoning_min_len: 10               # L2 字段非退化：reasoning 长度阈值（字符）
+  action_min_len: 1
+  confidence_min: 0.0
+  confidence_max: 1.0
+
+tau:
+  search_step: 0.01                   # dev 扫描 τ∈[0,1] 步长
+  miss_rate_cap: 0.01                 # 漏检率 ≤1% 约束（选满足约束的最大 τ，经用户批准偏离方案原文"最小"）
+  sensitivity_window: 0.05            # τ*±0.05 邻域敏感性
+
+llm:
+  n_pool: 1000                        # E5/E6/E8 抽样子集 n
+  temperature0_topk: -1               # 确定性核查
+  temp_sensitivity: [0.3, 0.7]        # temp 敏感性
+  n_guided_verify: 2                  # temp=0 后 2 次确定性核查（分歧率并入方差）
+
+energy:
+  sample_hz: 10.0                     # pynvml 采样频率
+  idle_profile: loaded                # 主报加载待机基线（B.5）
+
+edge:                                  # B.2 边缘延迟解析估算
+  eta_min: 0.2
+  eta_max: 0.5
+
+network:                               # B.4 两区制传输模型
+  initial_window_bytes: 14600          # W0 ≈ 14.6KB
+  mss_bytes: 1460
+  p_loss_assumed: 0.01                 # Mathis 稳态上界假设丢包率（用于估算，实测校准）
+
+expert:                                # E19 专家评估
+  num_layers: 4
+  per_layer: 50
+  raters: 2
+  kappa_threshold: 0.6                 # 加权κ<0.6 引第三仲裁者
+  n_batches: 4                         # 随机4批次，批间强制休息
+  likert_scale: 5

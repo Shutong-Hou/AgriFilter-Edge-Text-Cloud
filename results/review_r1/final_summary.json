@@ -1,0 +1,102 @@
+{
+  "comparisons": [
+    {
+      "pair": "L3 vs L3-noU（seed42）",
+      "n": 1000,
+      "base_correct": 941,
+      "base_acc": 0.941,
+      "base_ci": [
+        0.9246387632925527,
+        0.9539859121542509
+      ],
+      "new_correct": 773,
+      "new_acc": 0.773,
+      "new_ci": [
+        0.746020700386552,
+        0.797889812985279
+      ],
+      "delta_pp": -16.8,
+      "gain": 43,
+      "loss": 211,
+      "mcnemar_p": 8.427455856353153e-28,
+      "new_unique_preds": 33,
+      "new_top_pred": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "new_top_pred_share": 0.15
+    },
+    {
+      "pair": "L3 vs L3-noU（seed43）",
+      "n": 1000,
+      "base_correct": 936,
+      "base_acc": 0.936,
+      "base_ci": [
+        0.9190989242389269,
+        0.9495640201937408
+      ],
+      "new_correct": 781,
+      "new_acc": 0.781,
+      "new_ci": [
+        0.7543178981817003,
+        0.8055313848127484
+      ],
+      "delta_pp": -15.5,
+      "gain": 39,
+      "loss": 194,
+      "mcnemar_p": 6.459637303789099e-26,
+      "new_unique_preds": 36,
+      "new_top_pred": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "new_top_pred_share": 0.13
+    },
+    {
+      "pair": "L4 vs L4-fullKG（seed42）",
+      "n": 1000,
+      "base_correct": 868,
+      "base_acc": 0.868,
+      "base_ci": [
+        0.8456047044505801,
+        0.8875786981898365
+      ],
+      "new_correct": 779,
+      "new_acc": 0.779,
+      "new_ci": [
+        0.7522423161766015,
+        0.8036222744121926
+      ],
+      "delta_pp": -8.9,
+      "gain": 104,
+      "loss": 193,
+      "mcnemar_p": 2.698166155380408e-07,
+      "new_unique_preds": 56,
+      "new_top_pred": "番茄黄叶卷曲病毒",
+      "new_top_pred_share": 0.078
+    },
+    {
+      "pair": "L3 vs L4-fullKG（seed42）",
+      "n": 1000,
+      "base_correct": 941,
+      "base_acc": 0.941,
+      "base_ci": [
+        0.9246387632925527,
+        0.9539859121542509
+      ],
+      "new_correct": 779,
+      "new_acc": 0.779,
+      "new_ci": [
+        0.7522423161766015,
+        0.8036222744121926
+      ],
+      "delta_pp": -16.2,
+      "gain": 41,
+      "loss": 203,
+      "mcnemar_p": 5.717492076478432e-27,
+      "new_unique_preds": 56,
+      "new_top_pred": "番茄黄叶卷曲病毒",
+      "new_top_pred_share": 0.078
+    }
+  ],
+  "skipped": [
+    "L4 vs L4-fullKG（seed43）",
+    "L2 vs L2-fullKG（seed42）",
+    "L2 vs L2-fullKG（seed43）",
+    "L3 vs L4-fullKG（seed43）"
+  ]
+}
