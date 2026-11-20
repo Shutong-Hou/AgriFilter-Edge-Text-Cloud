@@ -16,6 +16,8 @@ The pipeline converts each leaf photograph into a short structured evidence payl
 | `results/review_r1/*.jsonl` | Per-sample prediction records (whole-image VLM baseline, chain-of-thought and three-shot controls, L3/L4 arms) |
 | `results/review_r1/*.json` | Summary statistics corresponding to those records |
 | `prereg/S3_preregistration.md` | Pre-registration plan, frozen before the language-model runs |
+| `configs/kg/` | Knowledge-graph files: the frozen 10-entry seed graph, the 38-class draft with prevention entries, and the hallucination whitelist |
+| `audit/` | 100-record content-audit sheet with a 1--3 rubric for action appropriateness and reasoning support, plus the sampling script |
 | `src/`, `configs/`, `scripts/` | Source code, schemas and configuration for the reported experiments |
 
 ## Reproducing the on-device measurement

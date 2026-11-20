@@ -1,0 +1,886 @@
+{
+  "_about": "S1 38 类全覆盖 KG 草案：26 病害类 × 3 条（symptom/causal/prevention）+ 12 健康类 × 2 条。内容为公开植保常识客观陈述；source_url 待人工逐条登记；100 条双人核对为人工环节。注：本文件仅供 S1 审计与未来实验使用，E5/E6 运行时的 configs/kg/kg.json 保持冻结未动。",
+  "alias_dict": {
+    "_about": "【辅助补充】E5 诊断命中评估用 38 类中英别名映射。仅用于评估匹配口径（模型可能输出中文诊断名），不改变任何消融设置或 prompt。真实性以 PlantVillage 官方类名为准，中文名为对应作物病害的通用译名。",
+    "Apple___Apple_scab": [
+      "苹果黑星病",
+      "苹果疮痂病"
+    ],
+    "Apple___Black_rot": [
+      "苹果黑腐病"
+    ],
+    "Apple___Cedar_apple_rust": [
+      "苹果锈病",
+      "苹果雪松锈病"
+    ],
+    "Apple___healthy": [
+      "苹果健康",
+      "健康苹果"
+    ],
+    "Blueberry___healthy": [
+      "蓝莓健康",
+      "健康蓝莓"
+    ],
+    "Cherry_(including_sour)___Powdery_mildew": [
+      "樱桃白粉病",
+      "樱桃粉霉病"
+    ],
+    "Cherry_(including_sour)___healthy": [
+      "樱桃健康",
+      "健康樱桃"
+    ],
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": [
+      "玉米灰斑病",
+      "玉米叶斑病",
+      "玉米尾孢叶斑病"
+    ],
+    "Corn_(maize)___Common_rust_": [
+      "玉米普通锈病",
+      "玉米锈病",
+      "玉米常见锈病"
+    ],
+    "Corn_(maize)___Northern_Leaf_Blight": [
+      "玉米大斑病",
+      "玉米北方叶枯病"
+    ],
+    "Corn_(maize)___healthy": [
+      "玉米健康",
+      "健康玉米"
+    ],
+    "Grape___Black_rot": [
+      "葡萄黑腐病"
+    ],
+    "Grape___Esca_(Black_Measles)": [
+      "葡萄埃斯卡病",
+      "葡萄黑麻疹病",
+      "葡萄黑斑病"
+    ],
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": [
+      "葡萄叶枯病",
+      "葡萄叶斑病"
+    ],
+    "Grape___healthy": [
+      "葡萄健康",
+      "健康葡萄"
+    ],
+    "Orange___Haunglongbing_(Citrus_greening)": [
+      "柑橘黄龙病",
+      "柑橘绿化病"
+    ],
+    "Peach___Bacterial_spot": [
+      "桃细菌性斑点病",
+      "桃细菌性斑病"
+    ],
+    "Peach___healthy": [
+      "桃健康",
+      "健康桃"
+    ],
+    "Pepper,_bell___Bacterial_spot": [
+      "甜椒细菌性斑点病",
+      "辣椒细菌性斑点病",
+      "甜椒细菌性斑病"
+    ],
+    "Pepper,_bell___healthy": [
+      "甜椒健康",
+      "辣椒健康",
+      "健康甜椒"
+    ],
+    "Potato___Early_blight": [
+      "马铃薯早疫病",
+      "土豆早疫病"
+    ],
+    "Potato___Late_blight": [
+      "马铃薯晚疫病",
+      "土豆晚疫病"
+    ],
+    "Potato___healthy": [
+      "马铃薯健康",
+      "土豆健康",
+      "健康马铃薯"
+    ],
+    "Raspberry___healthy": [
+      "树莓健康",
+      "覆盆子健康",
+      "健康树莓"
+    ],
+    "Soybean___healthy": [
+      "大豆健康",
+      "健康大豆"
+    ],
+    "Squash___Powdery_mildew": [
+      "西葫芦白粉病",
+      "南瓜白粉病",
+      "瓜类白粉病"
+    ],
+    "Strawberry___Leaf_scorch": [
+      "草莓叶枯病",
+      "草莓叶焦病"
+    ],
+    "Strawberry___healthy": [
+      "草莓健康",
+      "健康草莓"
+    ],
+    "Tomato___Bacterial_spot": [
+      "番茄细菌性斑点病",
+      "番茄细菌性斑病",
+      "番茄细菌斑点病"
+    ],
+    "Tomato___Early_blight": [
+      "番茄早疫病",
+      "番茄早疫"
+    ],
+    "Tomato___Late_blight": [
+      "番茄晚疫病",
+      "番茄晚疫"
+    ],
+    "Tomato___Leaf_Mold": [
+      "番茄叶霉病",
+      "番茄叶斑病"
+    ],
+    "Tomato___Septoria_leaf_spot": [
+      "番茄斑枯病",
+      "番茄壳针孢叶斑病",
+      "番茄叶斑病"
+    ],
+    "Tomato___Spider_mites Two-spotted_spider_mite": [
+      "番茄二斑叶螨",
+      "番茄红蜘蛛",
+      "二斑叶螨",
+      "红蜘蛛"
+    ],
+    "Tomato___Target_Spot": [
+      "番茄靶斑病",
+      "番茄靶点病",
+      "番茄叶点斑病"
+    ],
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": [
+      "番茄黄化曲叶病毒",
+      "番茄黄叶卷曲病毒",
+      "番茄黄化卷叶病毒"
+    ],
+    "Tomato___Tomato_mosaic_virus": [
+      "番茄花叶病毒病",
+      "番茄花叶病"
+    ],
+    "Tomato___healthy": [
+      "番茄健康",
+      "健康番茄"
+    ]
+  },
+  "entries": [
+    {
+      "subject": "Apple___Apple_scab",
+      "relation": "symptom",
+      "object": "叶片与果实出现橄榄绿色至黑色绒状病斑，病果畸形开裂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Apple_scab",
+      "relation": "causal",
+      "object": "致病真菌 Venturia inaequalis（苹果黑星菌）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Apple_scab",
+      "relation": "prevention",
+      "object": "秋季清园销毁落叶，生长期按物候喷施保护性杀菌剂（如代森锰锌类）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Black_rot",
+      "relation": "symptom",
+      "object": "果实变褐腐烂，叶片出现褐色同心轮纹圆斑，枝干溃疡",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Black_rot",
+      "relation": "causal",
+      "object": "致病真菌 Botryosphaeria obtusa",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Black_rot",
+      "relation": "prevention",
+      "object": "清除病枝病果病叶，加强树势，生长期合理喷施杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Cedar_apple_rust",
+      "relation": "symptom",
+      "object": "叶面出现橙黄色锈斑（上生黑色小点），严重时叶片变形脱落",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Cedar_apple_rust",
+      "relation": "causal",
+      "object": "转主寄生锈菌 Gymnosporangium juniperi-virginianae（需圆柏转主）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___Cedar_apple_rust",
+      "relation": "prevention",
+      "object": "隔离清除附近圆柏转主寄主，发病前后喷施三唑类杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Apple___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Blueberry___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Blueberry___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Cherry_(including_sour)___Powdery_mildew",
+      "relation": "symptom",
+      "object": "叶片与新梢表面覆白色粉状霉层，嫩叶卷缩畸形",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Cherry_(including_sour)___Powdery_mildew",
+      "relation": "causal",
+      "object": "致病真菌 Podosphaera clandestina",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Cherry_(including_sour)___Powdery_mildew",
+      "relation": "prevention",
+      "object": "改善通风透光，发病初期喷施硫磺制或三唑类杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Cherry_(including_sour)___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Cherry_(including_sour)___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "relation": "symptom",
+      "object": "叶片出现平行于叶脉的长条状灰褐色病斑，多发于下部老叶",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "relation": "causal",
+      "object": "致病真菌 Cercospora zeae-maydis",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "relation": "prevention",
+      "object": "选用抗病品种，轮作与残茬处理，大喇叭口期后叶面杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Common_rust_",
+      "relation": "symptom",
+      "object": "叶片两面散布铁锈色疱状夏孢子堆，重发时叶片早枯",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Common_rust_",
+      "relation": "causal",
+      "object": "致病真菌 Puccinia sorghi",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Common_rust_",
+      "relation": "prevention",
+      "object": "选用抗病杂交种，发病初期喷施三唑类杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Northern_Leaf_Blight",
+      "relation": "symptom",
+      "object": "叶片出现长梭形灰褐色大斑，多个病斑融合成片致整叶枯死",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Northern_Leaf_Blight",
+      "relation": "causal",
+      "object": "致病真菌 Exserohilum turcicum",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___Northern_Leaf_Blight",
+      "relation": "prevention",
+      "object": "选用抗病品种，轮作并清除田间残茬，病害流行期喷施杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Corn_(maize)___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Black_rot",
+      "relation": "symptom",
+      "object": "果粒变褐干缩成僵果，叶片出现褐色圆斑，新梢溃疡",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Black_rot",
+      "relation": "causal",
+      "object": "致病真菌 Guignardia bidwellii",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Black_rot",
+      "relation": "prevention",
+      "object": "清除并销毁僵果病枝，花前花后按物候喷施保护性杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Esca_(Black_Measles)",
+      "relation": "symptom",
+      "object": "叶片出现虎纹状沿脉褪绿坏死，果粒出现紫黑色坏死斑点，藤干枯",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Esca_(Black_Measles)",
+      "relation": "causal",
+      "object": "复合木质部真菌（Phaeomoniella chlamydospora 等）引发",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Esca_(Black_Measles)",
+      "relation": "prevention",
+      "object": "修剪伤口涂抹保护剂，改善树势与水分管理，移除重病株",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+      "relation": "symptom",
+      "object": "叶片出现褐色角状斑，背面生灰褐色霉层，重发时落叶",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+      "relation": "causal",
+      "object": "致病真菌 Isariopsis clavispora（有性态 Pseudocercospora vitis）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+      "relation": "prevention",
+      "object": "改善架面通风透光，雨季前后喷施铜制剂或保护性杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Grape___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Orange___Haunglongbing_(Citrus_greening)",
+      "relation": "symptom",
+      "object": "叶片斑驳黄化且不对称（黄绿相间），果实畸形变小、味苦、易落果",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Orange___Haunglongbing_(Citrus_greening)",
+      "relation": "causal",
+      "object": "韧皮部难培养细菌 Candidatus Liberibacter asiaticus（木虱传播）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Orange___Haunglongbing_(Citrus_greening)",
+      "relation": "prevention",
+      "object": "无根治手段：及时清除病株，防治木虱，使用无病苗木并严格检疫",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Peach___Bacterial_spot",
+      "relation": "symptom",
+      "object": "叶面水渍状角斑后穿孔，果面凹陷溃疡斑，嫩梢条状病斑",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Peach___Bacterial_spot",
+      "relation": "causal",
+      "object": "细菌 Xanthomonas arboricola pv. pruni",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Peach___Bacterial_spot",
+      "relation": "prevention",
+      "object": "选用抗性砧木与品种，萌芽前喷施铜制剂，减少机械伤与顶灌",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Peach___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Peach___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Pepper,_bell___Bacterial_spot",
+      "relation": "symptom",
+      "object": "叶面水渍状褐色角斑，果面疮痂状斑，重发时大量落叶",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Pepper,_bell___Bacterial_spot",
+      "relation": "causal",
+      "object": "细菌 Xanthomonas euvesicatoria（复合种）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Pepper,_bell___Bacterial_spot",
+      "relation": "prevention",
+      "object": "选用抗病品种与无病种子，轮作，铜制剂预防，避免顶喷灌",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Pepper,_bell___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Pepper,_bell___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___Early_blight",
+      "relation": "symptom",
+      "object": "叶片出现带同心轮纹的暗褐色角斑，茎条斑，块茎表面黑褐色斑",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___Early_blight",
+      "relation": "causal",
+      "object": "致病真菌 Alternaria solani",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___Early_blight",
+      "relation": "prevention",
+      "object": "轮作 2 年以上，合理密植，发病前喷施代森锰锌等保护剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___Late_blight",
+      "relation": "symptom",
+      "object": "叶片水渍状暗绿色坏死斑并快速扩展，潮湿时病斑边缘生白色霉层，块茎腐烂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___Late_blight",
+      "relation": "causal",
+      "object": "卵菌（致病疫霉）Phytophthora infestans",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___Late_blight",
+      "relation": "prevention",
+      "object": "选用抗病品种与无病种薯，冷凉高湿期预防性喷施含甲霜灵或铜类药剂（注意抗药性管理）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Potato___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Raspberry___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Raspberry___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Soybean___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Soybean___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Squash___Powdery_mildew",
+      "relation": "symptom",
+      "object": "叶片与新梢覆白色粉状霉层，叶片黄化早枯，严重影响坐果",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Squash___Powdery_mildew",
+      "relation": "causal",
+      "object": "致病真菌 Podosphaera xanthii 或 Golovinomyces 属",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Squash___Powdery_mildew",
+      "relation": "prevention",
+      "object": "选用抗病品种，加强通风透光，发病初期喷施硫制剂或三唑类杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Strawberry___Leaf_scorch",
+      "relation": "symptom",
+      "object": "叶片出现紫红至褐色斑点，叶缘焦枯呈灼伤状，叶面似发亮",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Strawberry___Leaf_scorch",
+      "relation": "causal",
+      "object": "致病真菌 Diplocarpon earlianum",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Strawberry___Leaf_scorch",
+      "relation": "prevention",
+      "object": "清除田间病残老叶，保持通风，发病期喷施保护性杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Strawberry___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Strawberry___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Bacterial_spot",
+      "relation": "symptom",
+      "object": "叶片出现水渍状褐色小斑（重发成片穿孔），果实表面疮痂状褐斑",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Bacterial_spot",
+      "relation": "causal",
+      "object": "细菌 Xanthomonas perforans（复合种）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Bacterial_spot",
+      "relation": "prevention",
+      "object": "选用抗病品种与无病种子，铜制剂预防，避免机械伤与顶灌",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Early_blight",
+      "relation": "symptom",
+      "object": "叶片下部先出现带同心轮纹的靶心状褐斑，茎环状斑，果脐部斑",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Early_blight",
+      "relation": "causal",
+      "object": "致病真菌 Alternaria solani",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Early_blight",
+      "relation": "prevention",
+      "object": "轮作 2 年以上，改善通风，发病前喷施代森锰锌类保护剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Late_blight",
+      "relation": "symptom",
+      "object": "叶片水渍状暗绿斑，潮湿时边缘生白色霉层，茎呈黑褐色腐烂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Late_blight",
+      "relation": "causal",
+      "object": "卵菌 Phytophthora infestans",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Late_blight",
+      "relation": "prevention",
+      "object": "选用抗病品种，低温高湿期预防性喷施铜类或霜脲氰类药剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Leaf_Mold",
+      "relation": "symptom",
+      "object": "叶片正面褪绿黄斑、背面生橄榄绿色绒状霉层，重发时叶片枯死",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Leaf_Mold",
+      "relation": "causal",
+      "object": "致病真菌 Passalora fulva（有性态 Cladosporium fulvum）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Leaf_Mold",
+      "relation": "prevention",
+      "object": "加大通风降低棚室湿度，硫磺熏蒸或喷施硫类药剂，选抗病品种",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Septoria_leaf_spot",
+      "relation": "symptom",
+      "object": "老叶先发病：灰白色圆形小斑，斑内生黑色小点（分生孢子器），重发时黄化落叶",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Septoria_leaf_spot",
+      "relation": "causal",
+      "object": "致病真菌 Septoria lycopersici",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Septoria_leaf_spot",
+      "relation": "prevention",
+      "object": "清除病残枝叶，避免露水作业，生长期喷施代森锰锌类药剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "relation": "symptom",
+      "object": "叶面出现密集黄白色小点，叶背可见细网丝与活动螨体，重发时叶片焦枯",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "relation": "causal",
+      "object": "二斑叶螨（红蜘蛛）Tetranychus urticae 刺吸为害",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "relation": "prevention",
+      "object": "保护自然天敌，控制田间湿度，螨量超标时轮换使用杀螨剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Target_Spot",
+      "relation": "symptom",
+      "object": "叶片出现褐色靶心状同心环斑，茎与果实也生坏死斑",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Target_Spot",
+      "relation": "causal",
+      "object": "致病真菌 Corynespora cassiicola",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Target_Spot",
+      "relation": "prevention",
+      "object": "轮作并清除病残体，发病初期喷施广谱叶面杀菌剂",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "relation": "symptom",
+      "object": "新叶变小黄化并向上卷曲，植株矮缩，坐果少且畸形",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "relation": "causal",
+      "object": "番茄黄化曲叶病毒（TYLCV），烟粉虱传播",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "relation": "prevention",
+      "object": "防除烟粉虱（黄板/网室/药剂），选用抗病品种，及时拔除病株",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Tomato_mosaic_virus",
+      "relation": "symptom",
+      "object": "叶片呈花叶、畸形，植株矮化，果实出现褪绿斑块",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Tomato_mosaic_virus",
+      "relation": "causal",
+      "object": "番茄花叶病毒（ToMV），接触与种子带毒传播",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___Tomato_mosaic_virus",
+      "relation": "prevention",
+      "object": "种子消毒，田间卫生器械消毒，选用抗病品种，清除病株",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___healthy",
+      "relation": "symptom",
+      "object": "无明显病害症状（健康叶片/植株）",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    },
+    {
+      "subject": "Tomato___healthy",
+      "relation": "prevention",
+      "object": "无需专门防治，按常规栽培管理",
+      "source_url": "",
+      "note": "S1 自动补全草案：来源URL待人工登记，并纳入100条双人核对（人工环节）"
+    }
+  ]
+}
