@@ -10,7 +10,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-ROOT = Path(r"D:\agri_review_run")
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 import torch  # noqa: E402
@@ -47,10 +47,10 @@ def main() -> None:
     dummy = torch.rand(1, 3, 224, 224, dtype=torch.float32) * 255.0
 
     jobs = [
-        ("saf", load_saf_ckpt(ROOT / "results" / "train_saf" / "saf_seed43.pt",
+        ("saf", load_saf_ckpt(ROOT / "models" / "saf_seed43.pt",
                               n_classes=2, pretrained=False),
          ["probs", "u"]),
-        ("csc", load_csc_ckpt(ROOT / "results" / "train_csc" / "csc_seed43.pt",
+        ("csc", load_csc_ckpt(ROOT / "models" / "csc_seed43.pt",
                               n_classes=n_cls, pretrained=False),
          ["probs"]),
     ]

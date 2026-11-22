@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -33,17 +34,16 @@ from src.data.datasets import default_eval_transform  # noqa: E402
 from src.inference.saf_csc_infer import csc_infer, load_csc_ckpt, load_saf_ckpt, saf_infer  # noqa: E402
 from src.inference.pipeline import build_prompt  # noqa: E402
 
-SRC_PREFIX = r"E:\AgriFilter\data"
-LOCAL_PREFIX = r"D:\agri_review_run\_data"
-CLOUD_PREFIX = r"G:\阿里云盘\AgriFilter\data"
+DATA_ROOT = Path(os.environ.get("AGRI_DATA_ROOT", ROOT / "data"))
 OUT = ROOT / "results" / "review_r1"
 
 
 def resolve(p: str) -> Path:
-    lp = Path(p.replace(SRC_PREFIX, LOCAL_PREFIX))
-    if lp.exists():
-        return lp
-    return Path(p.replace(SRC_PREFIX, CLOUD_PREFIX))
+    parts = Path(p).parts
+    for marker in ("plantvillage", "plantdoc", "cassava"):
+        if marker in parts:
+            return DATA_ROOT.joinpath(*parts[parts.index(marker):])
+    return Path(p)
 
 
 class PathListDataset(Dataset):
@@ -70,7 +70,7 @@ class PathListDataset(Dataset):
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=str(ROOT / "models" / "Qwen2.5-7B-Instruct"))
+    ap.add_argument("--model", default="Qwen/Qwen2.5-7B-Instruct")
     ap.add_argument("--arm", nargs="+", default=["L4"], choices=["L2", "L4"])
     ap.add_argument("--seeds", nargs="+", type=int, default=[42, 43])
     ap.add_argument("--n", type=int, default=1000)

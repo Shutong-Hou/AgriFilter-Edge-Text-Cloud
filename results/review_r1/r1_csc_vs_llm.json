@@ -7,7 +7,7 @@
       44
     ],
     "csc_ckpt": "csc_seed43.pt",
-    "data_root": "G:\\阿里云盘\\AgriFilter\\data",
+    "data_root": "data",
     "arms": [
       "L0",
       "L2",

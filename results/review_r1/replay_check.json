@@ -5,7 +5,7 @@
     "new_acc": 0.82,
     "identical_outputs": 0,
     "same_verdict": 72,
-    "model": "D:\\agri_review_run\\models\\Qwen2.5-7B-Instruct"
+    "model": "Qwen/Qwen2.5-7B-Instruct"
   },
   "detail": [
     {

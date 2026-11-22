@@ -13,11 +13,11 @@ import json
 import shutil
 from pathlib import Path
 
-ROOT = Path(r"D:\agri_review_run")
-EXP = ROOT / "export"
+ROOT = Path(__file__).resolve().parents[1]
+EXP = ROOT / "models"
 ORT = ROOT / "ort_dist"
 OUT_DIR = ROOT / "mobile_bench"
-TPL = ROOT / "scripts" / "mobile_bench_template.html"
+TPL = ROOT / "mobile_bench" / "mobile_bench_template.html"
 
 
 def b64(p: Path) -> str:

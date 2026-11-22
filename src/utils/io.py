@@ -8,7 +8,7 @@ from typing import Any
 
 import yaml
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]  # E:/AgriFilter
+PROJECT_ROOT = Path(__file__).resolve().parents[2]  # repository root
 
 
 def env_path(key: str, default: str) -> Path:

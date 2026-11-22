@@ -12,17 +12,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import re
 import sys
 import time
 from pathlib import Path
 
-ROOT = Path(r"D:\agri_review_run")
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-SRC_PREFIX = r"E:\AgriFilter\data"
-LOCAL_PREFIX = r"D:\agri_review_run\_data"
+DATA_ROOT = Path(os.environ.get("AGRI_DATA_ROOT", ROOT / "data"))
 
 JSON_INSTR = (
     "请仅输出一个 JSON 对象，字段：diagnosis(病害类别名，从给定候选选一个)、"
@@ -57,7 +57,11 @@ except Exception as e:  # pragma: no cover
 
 
 def local(p: str) -> Path:
-    return Path(p.replace(SRC_PREFIX, LOCAL_PREFIX))
+    parts = Path(p).parts
+    for marker in ("plantvillage", "plantdoc", "cassava"):
+        if marker in parts:
+            return DATA_ROOT.joinpath(*parts[parts.index(marker):])
+    return Path(p)
 
 
 def parse_diag(raw: str, last: bool = False) -> tuple[str, bool]:
@@ -116,9 +120,6 @@ def pick_exemplars(part, classes):
         if hit is None:
             continue
         q = local(hit)
-        if not q.exists():
-            q.parent.mkdir(parents=True, exist_ok=True)
-            q.write_bytes(Path(hit.replace(SRC_PREFIX, r"G:\阿里云盘\AgriFilter\data")).read_bytes())
         out.append((Image.open(q).convert("RGB"), cls))
     print(f"[R1-2VL] exemplars: {[c for _, c in out]}")
     return out
@@ -131,7 +132,7 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--max-new", type=int, default=0)
     ap.add_argument("--batch", type=int, default=1)
-    ap.add_argument("--model", default=r"D:\agri_review_run\models\Qwen2-VL-7B-Instruct")
+    ap.add_argument("--model", default="Qwen/Qwen2-VL-7B-Instruct")
     args = ap.parse_args()
 
     import torch

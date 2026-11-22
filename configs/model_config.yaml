@@ -2,9 +2,9 @@
 # 显存核算：Qwen2.5-7B FP16 ~15.2GB；3B FP16 ~7GB；14B-GPTQ-Int4 ~9.5GB；
 # Qwen2-VL-7B FP16 ~17GB；2x7B AWQ-Int4 ~13GB。（红线11：不可行配置禁止出现）
 
-models_dir: ${AGRI_MODELS_DIR:-E:/AgriFilter/models}
-results_dir: ${AGRI_RESULTS_DIR:-E:/AgriFilter/results}
-snapshots_dir: ${AGRI_SNAPSHOTS_DIR:-E:/AgriFilter/snapshots}
+models_dir: ${AGRI_MODELS_DIR:-models}
+results_dir: ${AGRI_RESULTS_DIR:-results}
+snapshots_dir: ${AGRI_SNAPSHOTS_DIR:-snapshots}
 
 saf:
   backbone: mobilenet_v3_small
@@ -53,4 +53,4 @@ vllm:
   temperature_main: 0.0          # temp=0 主实验
   top_p: 1.0
 
-prompt_templates: E:/AgriFilter/configs/prompts.yaml
+prompt_templates: configs/prompts.yaml

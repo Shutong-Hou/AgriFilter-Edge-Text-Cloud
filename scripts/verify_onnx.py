@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-ROOT = Path(r"D:\agri_review_run")
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.experiments.common import load_pv_classes  # noqa: E402
@@ -23,9 +23,9 @@ def main() -> None:
     x = torch.rand(1, 3, 224, 224, dtype=torch.float32) * 255.0
 
     cases = {
-        "saf": load_saf_ckpt(ROOT / "results" / "train_saf" / "saf_seed43.pt",
+        "saf": load_saf_ckpt(ROOT / "models" / "saf_seed43.pt",
                              n_classes=2, pretrained=False),
-        "csc": load_csc_ckpt(ROOT / "results" / "train_csc" / "csc_seed43.pt",
+        "csc": load_csc_ckpt(ROOT / "models" / "csc_seed43.pt",
                              n_classes=n_cls, pretrained=False),
     }
     for name, model in cases.items():
@@ -36,7 +36,7 @@ def main() -> None:
             keys = ["probs", "u"] if name == "saf" else ["probs"]
             ref = [out[k].numpy().reshape(-1) for k in keys]
 
-        sess = ort.InferenceSession(str(ROOT / "export" / f"{name}.onnx"),
+        sess = ort.InferenceSession(str(ROOT / "models" / f"{name}.onnx"),
                                     providers=["CPUExecutionProvider"])
         outs = sess.run(None, {"image": x.numpy()})
         print(f"[{name}] torch outs={[r.shape for r in ref]} onnx outs={[o.shape for o in outs]}")
